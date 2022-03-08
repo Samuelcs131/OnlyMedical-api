@@ -18,8 +18,7 @@ app.get('/', (req,res)=>{
               <p style="font-size: 20px;">Entre na rota <b>/graphql</b></p>`)  
 })
 
-async function start(){
-
+async function startServer(){
     await server.start()
     server.applyMiddleware({ app });
     
@@ -28,4 +27,4 @@ async function start(){
     })
 }
 
-start()
+startServer()
