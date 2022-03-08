@@ -1,4 +1,7 @@
-# Como utilziar a API
+# [OnlyMedical](https://onlymedical-api.herokuapp.com/graphql)
+Para acessar a [interface do projeto](https://github.com/Samuelcs131/OnlyMedical).
+
+<br/>
 
 ### Tecnologias utilizadas no desenvolvimento:
 * GraphQL
