@@ -13,10 +13,8 @@ const app = express();
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer }),
-    process.env.NODE_ENV !== "production" ? ApolloServerPluginLandingPageGraphQLPlayground() :
     ApolloServerPluginLandingPageDisabled() ],
   });
-
 
 await server.start();
 await server.applyMiddleware({ app });
@@ -26,7 +24,7 @@ httpServer.listen({ port: PORT, path:'/graphql' }, ()=>{
 })
 
 }
-
+console.log(process.env.NODE_ENV == "production")
 startApolloServer()
 
 /* const SERVER = new ApolloServer({ typeDefs, resolvers }) */
