@@ -6,55 +6,59 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
+var _merging = require("./grapql/merging");
+
 var _apolloServerExpress = require("apollo-server-express");
 
 var _apolloServerCore = require("apollo-server-core");
 
-var _merging = require("./grapql/merging");
+var _express = _interopRequireDefault(require("express"));
 
 var _http = _interopRequireDefault(require("http"));
 
-var _express = _interopRequireDefault(require("express"));
-
-function startApolloServer() {
+function startApolloServer(_x, _x2) {
   return _startApolloServer.apply(this, arguments);
 }
 
 function _startApolloServer() {
-  _startApolloServer = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
-    var PORT, app, httpServer, server;
+  _startApolloServer = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(typeDefs, resolvers) {
+    var app, httpServer, PORT, server;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            PORT = process.env.PORT || 4000;
+            // Required logic for integrating with Express
             app = (0, _express["default"])();
             httpServer = _http["default"].createServer(app);
+            PORT = process.env.PORT || 4000; // Same ApolloServer initialization as before, plus the drain plugin.
+
             server = new _apolloServerExpress.ApolloServer({
-              typeDefs: _merging.typeDefs,
-              resolvers: _merging.resolvers,
+              typeDefs: typeDefs,
+              resolvers: resolvers,
               plugins: [(0, _apolloServerCore.ApolloServerPluginDrainHttpServer)({
                 httpServer: httpServer
-              }), (0, _apolloServerCore.ApolloServerPluginLandingPageDisabled)()]
+              })]
             });
             _context.next = 6;
             return server.start();
 
           case 6:
-            _context.next = 8;
-            return server.applyMiddleware({
-              app: app
-            });
-
-          case 8:
-            httpServer.listen({
-              port: PORT,
+            server.applyMiddleware({
+              app: app,
               path: '/graphql'
-            }, function () {
-              console.log("\uD83D\uDE80 Servidor pronto em ".concat("http://localhost:".concat(PORT)));
+            }); // Modified server startup
+
+            _context.next = 9;
+            return new Promise(function (resolve) {
+              return httpServer.listen({
+                port: PORT
+              }, resolve);
             });
 
           case 9:
+            console.log("\uD83D\uDE80 Server ready at http://localhost:4000".concat(server.graphqlPath));
+
+          case 10:
           case "end":
             return _context.stop();
         }
@@ -64,8 +68,4 @@ function _startApolloServer() {
   return _startApolloServer.apply(this, arguments);
 }
 
-console.log(process.env.NODE_ENV == "production");
-startApolloServer();
-/* const SERVER = new ApolloServer({ typeDefs, resolvers }) */
-
-/* SERVER.listen().then(({ url }) => { console.log(`🚀 Servidor pronto em ${url}`); }); */
+startApolloServer(_merging.typeDefs, _merging.resolvers);
