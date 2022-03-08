@@ -8,7 +8,7 @@ async function startApolloServer(typeDefs, resolvers) {
   // Required logic for integrating with Express
   const app = express();
   const httpServer = http.createServer(app);
-  const PORT = process.env.PORT || 4000
+  const PORT = process.env.PORT || 8080
 
   // Same ApolloServer initialization as before, plus the drain plugin.
   const server = new ApolloServer({
@@ -16,15 +16,9 @@ async function startApolloServer(typeDefs, resolvers) {
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
-
  
   await server.start();
-  server.applyMiddleware({
-    app,
-
- 
-    path: '/graphql',
-  });
+  server.applyMiddleware({ app, path: '/graphql' });
 
   // Modified server startup
   await new Promise(resolve => httpServer.listen({ port: PORT }, resolve));
