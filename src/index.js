@@ -15,14 +15,14 @@ const server = new ApolloServer({
 
 app.get('/', (req,res)=>{  res.send('Servidor funcionando!')  })
 
-async function start(){ 
+async function start(){
 
     await server.start()
     server.applyMiddleware({ app });
     
-    app.listen({ port: PORT }, ()=>{
-    console.log("SERVER RUNNING ON PORT 8080")
-})
+    app.listen(PORT, ( res )=>{
+    console.log(`🚀 Servidor rodando em http://localhost:${PORT}/graphql`)
+    })
 }
 
 start()
