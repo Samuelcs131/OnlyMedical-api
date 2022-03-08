@@ -13,7 +13,10 @@ const server = new ApolloServer({
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer }), ApolloServerPluginLandingPageGraphQLPlayground()],
 });
 
-app.get('/', (req,res)=>{  res.send('Servidor funcionando!')  })
+app.get('/', (req,res)=>{  
+    res.send(`<h1>Servidor funcionando!</h1>
+              <p style="font-size: 20px;">Entre na rota <b>/graphql</b></p>`)  
+})
 
 async function start(){
 
