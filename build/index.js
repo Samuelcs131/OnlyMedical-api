@@ -89,4 +89,7 @@ function _start() {
   return _start.apply(this, arguments);
 }
 
+app.get('/', function (req, res) {
+  res.send('Funcionando!');
+});
 start();

@@ -43,4 +43,8 @@ async function start(){
 })
 }
 
+app.get('/', (req,res)=>{
+        res.send('Funcionando!')
+})
+
 start()
