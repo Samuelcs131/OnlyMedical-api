@@ -30,7 +30,7 @@ function _startApolloServer() {
             // Required logic for integrating with Express
             app = (0, _express["default"])();
             httpServer = _http["default"].createServer(app);
-            PORT = process.env.PORT || 4000; // Same ApolloServer initialization as before, plus the drain plugin.
+            PORT = process.env.PORT || 8080; // Same ApolloServer initialization as before, plus the drain plugin.
 
             server = new _apolloServerExpress.ApolloServer({
               typeDefs: typeDefs,
